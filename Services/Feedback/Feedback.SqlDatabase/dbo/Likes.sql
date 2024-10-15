@@ -1,0 +1,7 @@
+﻿CREATE TABLE Likes (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    FeedbackId INT NOT NULL,
+    UserId INT NOT NULL,
+    LikedAt DATETIME2 NOT NULL,
+    CONSTRAINT FK_Likes_Feedback FOREIGN KEY (FeedbackId) REFERENCES Feedback(Id)
+);
