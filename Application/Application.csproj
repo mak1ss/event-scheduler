@@ -7,4 +7,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Purchase\Commands\CreatePurchase\" />
+    <Folder Include="Purchase\Commands\DeletePurchase\" />
+    <Folder Include="Purchase\Commands\UpdatePurchase\" />
+    <Folder Include="Purchase\Queries\GetPurchasesByEvent\" />
+    <Folder Include="Purchase\Queries\GetUserPurchases\" />
+    <Folder Include="Purchase\Queries\GetPurchaseById\" />
+  </ItemGroup>
+
 </Project>

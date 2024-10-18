@@ -11,5 +11,6 @@ namespace Domain.Entities
         public string PaymentMethod { get; set; }
         public DateTime? PurchasedTime { get; set; }
         public Decimal? TotalAmount { get; set; }
+        public IEnumerable<Ticket> PurchasedTickets { get; set; }
     }
 }

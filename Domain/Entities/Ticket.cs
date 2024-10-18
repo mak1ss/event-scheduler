@@ -6,8 +6,8 @@ namespace Domain.Entities
         public int Id { get; set; }
         public int EventId { get; set; }
         public int UserId { get; set; }
-        public int PurchaseId {  get; set; }
-        public Purchase Purchase { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int PurchaseId { get; set; }
+        public Purchase Purchase { get; set; }
     }
 }
