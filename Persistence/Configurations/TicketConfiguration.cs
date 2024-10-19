@@ -8,6 +8,8 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Ticket> builder)
         {
+            builder.ToTable(nameof(Ticket));
+
             builder.Property(t => t.Id)
                 .UseIdentityColumn()
                 .IsRequired();

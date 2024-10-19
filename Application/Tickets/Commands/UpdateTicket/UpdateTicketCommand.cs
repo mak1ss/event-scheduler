@@ -1,19 +1,19 @@
 ﻿using Application.Common.Exceptions;
+using Application.Tickets.Dto;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Tickets.Commands.Update
 {
-    public class UpdateTicketCommand : IRequest
+    public class UpdateTicketCommand : IRequest<TicketResponse>
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public int EventId { get; set; }
 
-        public class UpdateTicketRequestHandler : IRequestHandler<UpdateTicketCommand>
+        public class UpdateTicketRequestHandler : IRequestHandler<UpdateTicketCommand, TicketResponse>
         {
 
             private readonly TicketDbContext context;
@@ -25,7 +25,7 @@ namespace Application.Tickets.Commands.Update
                 this.mapper = mapper;
             }
 
-            public async Task Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
+            public async Task<TicketResponse> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
             {
                 var ticket = await context.Tickets.FindAsync(request.Id);
 
@@ -39,6 +39,8 @@ namespace Application.Tickets.Commands.Update
                 await Task.Run(() => context.Tickets.Update(ticket));
 
                 await context.SaveChangesAsync(cancellationToken);
+
+                return mapper.Map<Ticket, TicketResponse>(ticket);
             }
         }
 

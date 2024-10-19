@@ -8,11 +8,11 @@ using Persistence;
 
 namespace Application.Tickets.Queries.GetTicketById
 {
-    public class GetTicketByIdQuery : IRequest<GetTicketResponse>
+    public class GetTicketByIdQuery : IRequest<TicketResponse>
     {
         public int Id { get; set; }
 
-        public class GetTicketByIdQueryHandler : IRequestHandler<GetTicketByIdQuery, GetTicketResponse>
+        public class GetTicketByIdQueryHandler : IRequestHandler<GetTicketByIdQuery, TicketResponse>
         {
             private readonly TicketDbContext context;
             private readonly IMapper mapper;
@@ -23,7 +23,7 @@ namespace Application.Tickets.Queries.GetTicketById
                 this.mapper = mapper;
             }
 
-            public async Task<GetTicketResponse> Handle(GetTicketByIdQuery request, CancellationToken cancellationToken)
+            public async Task<TicketResponse> Handle(GetTicketByIdQuery request, CancellationToken cancellationToken)
             {
                 var ticket = await context.Tickets.FindAsync(request.Id);
 
@@ -32,7 +32,7 @@ namespace Application.Tickets.Queries.GetTicketById
                     throw new EntityNotFoundException($"Ticket with id {request.Id} doesn't exist");
                 }
 
-                return mapper.Map<Ticket, GetTicketResponse>(ticket);
+                return mapper.Map<Ticket, TicketResponse>(ticket);
             }
         }
     }

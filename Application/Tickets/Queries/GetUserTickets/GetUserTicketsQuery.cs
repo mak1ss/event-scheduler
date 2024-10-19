@@ -7,11 +7,11 @@ using Persistence;
 
 namespace Application.Tickets.Queries.GetUserTickets
 {
-    public class GetUsersTicketsQuery : IRequest<IEnumerable<GetTicketResponse>>
+    public class GetUsersTicketsQuery : IRequest<IEnumerable<TicketResponse>>
     {
         public int UserId { get; set; }
 
-        public class GetUsersTicketsQueryHandler : IRequestHandler<GetUsersTicketsQuery, IEnumerable<GetTicketResponse>>
+        public class GetUsersTicketsQueryHandler : IRequestHandler<GetUsersTicketsQuery, IEnumerable<TicketResponse>>
         {
             private readonly TicketDbContext context;
             private readonly IMapper mapper;
@@ -22,13 +22,13 @@ namespace Application.Tickets.Queries.GetUserTickets
                 this.mapper = mapper;
             }
 
-            public async Task<IEnumerable<GetTicketResponse>> Handle(GetUsersTicketsQuery request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<TicketResponse>> Handle(GetUsersTicketsQuery request, CancellationToken cancellationToken)
             {
                 // TODO: Request to UserAPI for validation?
 
                 var tickets = await context.Tickets.Where(t => t.UserId == request.UserId).ToListAsync();
 
-                return tickets.Select(mapper.Map<Ticket, GetTicketResponse>);
+                return tickets.Select(mapper.Map<Ticket, TicketResponse>);
             }
         }
     }

@@ -9,6 +9,8 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Purchase> builder)
         {
+            builder.ToTable(nameof(Purchase));
+
             builder.Property(p => p.Id)
                 .UseIdentityColumn()
                 .IsRequired();

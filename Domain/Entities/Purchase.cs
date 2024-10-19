@@ -1,5 +1,4 @@
-﻿
-using Domain.Enums;
+﻿using Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -10,7 +9,7 @@ namespace Domain.Entities
         public PurchaseStatus Status { get; set; }
         public string PaymentMethod { get; set; }
         public DateTime? PurchasedTime { get; set; }
-        public Decimal? TotalAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
         public IEnumerable<Ticket> PurchasedTickets { get; set; }
     }
 }

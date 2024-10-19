@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Tickets.Dto
 {
-    public class GetTicketResponse
+    public class TicketResponse
     {
         public int Id { get; set; }
         public int EventId { get; set; }
@@ -16,7 +16,7 @@ namespace Application.Tickets.Dto
         {
             public Mapper()
             {
-                CreateMap<Ticket, GetTicketResponse>();
+                CreateMap<Ticket, TicketResponse>();
             }
         }
     }
