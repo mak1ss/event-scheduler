@@ -15,7 +15,7 @@ namespace ADO_Dapper_ServiceManagment.DAL.services
 
         public long Create(Like entity)
         {
-            entity.CreatedAt = DateTime.Now;
+            entity.LikedAt = DateTime.Now;
             return unitOfWork.LikeRepository.Add(entity);
         }
 

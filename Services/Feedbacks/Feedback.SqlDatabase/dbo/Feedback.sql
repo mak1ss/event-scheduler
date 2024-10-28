@@ -1,5 +1,6 @@
 ﻿CREATE TABLE Feedback (
     Id INT PRIMARY KEY IDENTITY(1,1),
+    UserId int NOT NULL,
     Content NVARCHAR(MAX) NOT NULL,
     Rating INT CHECK (Rating >= 1 AND Rating <= 5),
     CreatedAt DATETIME2 NOT NULL,

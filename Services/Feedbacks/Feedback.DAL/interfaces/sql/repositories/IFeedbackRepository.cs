@@ -5,5 +5,9 @@ namespace ADO_Dapper_ServiceManagment.DAL.interfaces.sql.repositories
 {
     public interface IFeedbackRepository : IGenericRepository<Feedback,int>
     {
+        IEnumerable<Feedback> GetAllFeedbacksWithLikes();
+
+        Feedback GetFeedbackWithLikes(int id);
+
     }
 }

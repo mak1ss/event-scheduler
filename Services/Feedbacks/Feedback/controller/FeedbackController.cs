@@ -55,7 +55,7 @@ namespace ADO_Dapper_ServiceManagment.controller
                     return NotFound(new { Message = $"Feedback with id {id} not found" });
                 }
 
-                var result = mapper.Map<FeedbackResponse>(feedback);
+                var result = mapper.Map<CompleteFeedbackResponse>(feedback);
                 logger.LogInformation($"Returned feedback with id {id}");
                 return Ok(result);
             }

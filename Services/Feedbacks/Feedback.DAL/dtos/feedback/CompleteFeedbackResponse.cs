@@ -1,7 +1,8 @@
-﻿
+﻿using ADO_Dapper_ServiceManagment.DAL.dtos.like;
+
 namespace ADO_Dapper_ServiceManagment.DAL.dtos.feedback
 {
-    public class FeedbackResponse
+    public class CompleteFeedbackResponse
     {
         public int Id { get; set; }
 
@@ -15,6 +16,6 @@ namespace ADO_Dapper_ServiceManagment.DAL.dtos.feedback
 
         public int EventId { get; set; }
 
-        public int LikesAmount { get; set; }
+        public List<LikeResponse> Likes { get; set; }
     }
 }

@@ -4,6 +4,10 @@ namespace ADO_Dapper_ServiceManagment.DAL.dtos.feedback
 {
     public class FeedbackRequest
     {
+
+        [Required]
+        public int UserId { get; set; }
+
         [Required]
         [MaxLength(255)]
         public string Content { get; set; }

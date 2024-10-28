@@ -26,12 +26,12 @@ namespace ADO_Dapper_ServiceManagment.DAL.services
 
         public IEnumerable<Feedback> GetAll()
         {
-            return unitOfWork.FeedbackRepository.GetAll();
+            return unitOfWork.FeedbackRepository.GetAllFeedbacksWithLikes();
         }
 
         public Feedback GetById(int id)
         {
-            return unitOfWork.FeedbackRepository.Get(id);
+            return unitOfWork.FeedbackRepository.GetFeedbackWithLikes(id);
         }
 
         public void Update(Feedback entity)

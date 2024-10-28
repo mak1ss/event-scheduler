@@ -11,7 +11,9 @@ namespace ADO_Dapper_ServiceManagment.DAL.mappers
         public DtoMappingProfile()
         {
             CreateMap<FeedbackRequest, Feedback>();
-            CreateMap<Feedback, FeedbackResponse>();
+            CreateMap<Feedback, FeedbackResponse>()
+                .ForMember(dest => dest.LikesAmount, opt => opt.MapFrom(src => src.Likes.Count));
+            CreateMap<Feedback, CompleteFeedbackResponse>();
 
             CreateMap<LikeRequest, Like>(); 
             CreateMap<Like, LikeResponse>();
