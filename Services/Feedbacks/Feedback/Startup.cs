@@ -35,6 +35,8 @@ namespace ADO_Dapper_ServiceManagment
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddAutoMapper(typeof(DtoMappingProfile));
+
+            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
