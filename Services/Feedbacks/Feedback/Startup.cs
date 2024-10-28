@@ -37,13 +37,31 @@ namespace ADO_Dapper_ServiceManagment
             services.AddAutoMapper(typeof(DtoMappingProfile));
 
             services.AddMemoryCache();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Feedback.API",
+                    Version = "v1"
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                    app.UseSwagger();
+                    app.UseSwaggerUI(options =>
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Feedback.API");
+                        options.RoutePrefix = string.Empty;
+                    });
+                }
             }
 
             app.UseHttpsRedirection();

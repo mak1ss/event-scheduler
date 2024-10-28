@@ -10,7 +10,7 @@ namespace Events.DAL
         public EventContext CreateDbContext(string[] args)
         {
             IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Event"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Events"))
                 .AddJsonFile("appsettings.json")
                 .Build();
 

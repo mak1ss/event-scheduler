@@ -23,8 +23,8 @@ namespace Events.DAL.Configs
 
             builder.Property(t => t.UpdatedAt);
 
-
-            new TagSeeder().Seed(builder);
+            builder.HasMany(t => t.Event)
+                .WithMany(e => e.Tags);
         }
     }
 }

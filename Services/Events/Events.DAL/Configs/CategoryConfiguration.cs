@@ -26,7 +26,6 @@ namespace Events.DAL.Configs
             builder.Property(c => c.UpdatedAt);
 
 
-            new CategorySeeder().Seed(builder);
         }
     }
 }

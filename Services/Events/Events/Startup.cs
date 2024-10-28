@@ -70,6 +70,16 @@ namespace Events.WEBAPI
             services.AddExceptionHandler<BadRequestExceptionHandler>();
             services.AddExceptionHandler<EntityNotFoundExceptionHandler>();
             services.AddExceptionHandler<GlobalExceptionHandler>();
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+                {
+                    AbortOnConnectFail = true,
+                    EndPoints = { options.Configuration }
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

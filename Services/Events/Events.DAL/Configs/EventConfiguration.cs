@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Events.DAL.Seeding;
 using Events.DAL.Entities;
 
 
@@ -37,11 +36,9 @@ namespace Events.DAL.Configs
                    .HasForeignKey(s => s.CategoryId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(s => s.Tags)
-               .WithMany(t => t.Event)
-               .UsingEntity(j => j.ToTable("eventTag"));
-
-            new EventSeeder().Seed(builder);
+            builder.HasMany(e => e.Tags)
+                   .WithMany(t => t.Event);
+                   
         }
     }
 }
