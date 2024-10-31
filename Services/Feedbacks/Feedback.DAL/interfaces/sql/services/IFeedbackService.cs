@@ -12,5 +12,7 @@ namespace ADO_Dapper_ServiceManagment.DAL.interfaces.sql.services
         void Delete(Feedback entity);
 
         IEnumerable<Feedback> GetAll();
+
+        IEnumerable<Feedback> GetFeedbacksByEvent(int eventId);
     }
 }

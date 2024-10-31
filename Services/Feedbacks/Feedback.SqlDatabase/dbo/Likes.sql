@@ -3,5 +3,5 @@
     FeedbackId INT NOT NULL,
     UserId INT NOT NULL,
     LikedAt DATETIME2 NOT NULL,
-    CONSTRAINT FK_Likes_Feedback FOREIGN KEY (FeedbackId) REFERENCES Feedback(Id)
+    CONSTRAINT FK_Likes_Feedback FOREIGN KEY (FeedbackId) REFERENCES Feedback(Id) ON DELETE CASCADE
 );

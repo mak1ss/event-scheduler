@@ -61,7 +61,7 @@ namespace Events.BLL.Services
 
         public async Task<IEnumerable<EventResponse>> GetAsync()
         {
-            var entities = await cache.GetOrSetAsyn("events", repo.GetAsync, logger);
+            var entities = await cache.GetOrSetAsync("events", repo.GetAsync, logger);
             return entities.Select(mapper.Map<Event, EventResponse>);
         }
 
@@ -70,7 +70,7 @@ namespace Events.BLL.Services
             var options = new DistributedCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromMinutes(3))
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-            var entity = await cache.GetOrSetAsyn($"event:{id}", () => repo.GetCompleteEntityAsync(id), logger);
+            var entity = await cache.GetOrSetAsync($"event:{id}", () => repo.GetCompleteEntityAsync(id), logger);
             return mapper.Map<Event, EventResponse>(entity);
         }
 
@@ -79,7 +79,7 @@ namespace Events.BLL.Services
             var options = new DistributedCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromMinutes(3))
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
-            var events = await cache.GetOrSetAsyn($"eventsByCategory:{categoryId}", () => repo.GetEventsByCategoryAsync(categoryId), logger, options);
+            var events = await cache.GetOrSetAsync($"eventsByCategory:{categoryId}", () => repo.GetEventsByCategoryAsync(categoryId), logger, options);
             return events.Select(mapper.Map<Event, EventResponse>);
         }
 

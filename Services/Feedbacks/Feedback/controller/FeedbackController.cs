@@ -127,5 +127,27 @@ namespace ADO_Dapper_ServiceManagment.controller
                 return HandleException(ex, $"deleting feedback with id {id}");
             }
         }
+
+        [HttpGet("ByEvent/{eventId}")]
+        public IActionResult GetByEventId(int eventId)
+        {
+            try
+            {
+                var feedbacks = feedbackService.GetFeedbacksByEvent(eventId);
+                if (feedbacks == null)
+                {
+                    logger.LogWarning($"Feedbacks for event ID {eventId} not found");
+                    return NotFound(new { Message = $"Feedbacks for event ID {eventId} not found" });
+                }
+
+                var result = mapper.Map<IEnumerable<Feedback>>(feedbacks);
+                logger.LogInformation($"Returned feedbacks for event ID {eventId}");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex, $"getting feedbacks for event ID {eventId}");
+            }
+        }
     }
 }

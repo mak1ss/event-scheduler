@@ -9,5 +9,6 @@ namespace ADO_Dapper_ServiceManagment.DAL.interfaces.sql.repositories
 
         Feedback GetFeedbackWithLikes(int id);
 
+        IEnumerable<Feedback> GetFeedbacksByEventId(int eventId);
     }
 }

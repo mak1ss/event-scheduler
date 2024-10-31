@@ -60,6 +60,11 @@ namespace ADO_Dapper_ServiceManagment.DAL.services
             return entity;   
         }
 
+        public IEnumerable<Feedback> GetFeedbacksByEvent(int eventId)
+        {
+            return unitOfWork.FeedbackRepository.GetFeedbacksByEventId(eventId);
+        }
+
         public void Update(Feedback entity)
         {
             entity.UpdatedAt = DateTime.Now;

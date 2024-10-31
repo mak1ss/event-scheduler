@@ -69,7 +69,7 @@ namespace Events.WEBAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("byCategory/{categoryId:int}")]
+        [HttpGet("ByCategory/{categoryId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -79,7 +79,7 @@ namespace Events.WEBAPI.Controllers
             return Ok(services);
         }
 
-        [HttpGet("byTags")]
+        [HttpGet("ByTags")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

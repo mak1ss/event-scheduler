@@ -1,0 +1,21 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "ServiceName": "event",
+      "UpstreamPathTemplate": "/event-gate/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "SwaggerKey": "event",
+      "FileCacheOptions": {
+        "TtlSeconds": 30
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "ServiceName": "event",
+      "SwaggerKey": "event",
+      "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/event-gate/{everything}"
+    }
+  ]
+}

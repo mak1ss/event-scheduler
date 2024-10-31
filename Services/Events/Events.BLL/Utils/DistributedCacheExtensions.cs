@@ -48,7 +48,7 @@ namespace Events.BLL.Utils
             }
         }
 
-        public static async Task<T?> GetOrSetAsyn<T>(this IDistributedCache cache, string key, Func<Task<T>> task, ILogger logger, DistributedCacheEntryOptions? options = null)
+        public static async Task<T?> GetOrSetAsync<T>(this IDistributedCache cache, string key, Func<Task<T>> task, ILogger logger, DistributedCacheEntryOptions? options = null)
         {
             if (!TryGetValue(cache, key, out T? entities))
             {

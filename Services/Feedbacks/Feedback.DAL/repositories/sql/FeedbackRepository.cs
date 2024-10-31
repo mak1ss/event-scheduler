@@ -125,5 +125,57 @@ namespace ADO_Dapper_ServiceManagment.DAL.repositories.sql
             return feedback;
         }
 
+        public IEnumerable<Feedback> GetFeedbacksByEventId(int eventId)
+        {
+            var feedbacks = new List<Feedback>();
+
+            string query = @"
+                        SELECT f.Id, f.UserId, f.Content, f.Rating, f.CreatedAt, f.UpdatedAt, f.EventId,
+                               l.Id AS LikeId, l.UserId AS LikedUserId, l.LikedAt
+                        FROM Feedback f
+                        LEFT JOIN Likes l ON f.Id = l.FeedbackId
+                        WHERE f.EventId = @EventId
+                        ORDER BY f.Id;";
+
+            using (var dbConnection = new SqlConnection(connectionString))
+            using (var command = new SqlCommand(query, dbConnection))
+            {
+                command.Parameters.AddWithValue("@EventId", eventId);
+                dbConnection.Open();
+                using (var reader = command.ExecuteReader())
+                {   
+                    Feedback current = null;
+                    while (reader.Read())
+                    {
+                        current = new Feedback
+                        {
+                            Id = eventId,
+                            UserId = Convert.ToInt32(reader["UserId"]),
+                            Content = reader["Content"].ToString(),
+                            Rating = Convert.ToInt32(reader["Rating"]),
+                            CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                            UpdatedAt = reader["UpdatedAt"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["UpdatedAt"]) : null,
+                            EventId = Convert.ToInt32(reader["EventId"]),
+                            Likes = new List<Like>()
+                        };
+
+                        if (reader["LikeId"] != DBNull.Value)
+                        {
+                            current.Likes.Add(new Like
+                            {
+                                Id = Convert.ToInt32(reader["LikeId"]),
+                                FeedbackId = current.Id,
+                                UserId = Convert.ToInt32(reader["LikedUserId"]),
+                                LikedAt = reader["LikedAt"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(reader["LikedAt"]) : null
+                            });
+                        }
+
+                        feedbacks.Add(current);
+                    }
+                }
+            }
+
+            return feedbacks;
+        }
     }
 }
