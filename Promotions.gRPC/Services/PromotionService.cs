@@ -23,8 +23,8 @@ namespace Promotions.gRPC.Services
             var promo = mapper.Map<CreatePromoRequest, Promotion>(request);
             promo.Code = PromocodeGenerator.GeneratePromoCode();
             promo = await repo.CreatePromo(promo);
-
-            return mapper.Map<Promotion, PromoResponse>(promo);
+            var res = mapper.Map<Promotion, PromoResponse>(promo);
+            return res;
         }
 
         public override async Task<DeletePromoResponse> DeletePromo(DeletePromoRequest request, ServerCallContext context)
@@ -63,7 +63,7 @@ namespace Promotions.gRPC.Services
                 throw new RpcException(new Status(StatusCode.NotFound, $"Promotion with code {request.Code} doesn't exist."));
             }
 
-            if(!(promo.EndDate >= DateTime.UtcNow || promo.TimesUsed < promo.MaxUses))
+            if(!(promo.EndDate >= DateTime.UtcNow) || !(promo.TimesUsed < promo.MaxUses))
             {
                 throw new RpcException(new Status(StatusCode.InvalidArgument, $"Promotion with code {request.Code} either expired or exceeded its use limit"));
             }

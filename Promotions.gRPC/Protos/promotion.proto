@@ -21,7 +21,8 @@ message PromoResponse {
     google.protobuf.Timestamp startDate = 5;
     google.protobuf.Timestamp endDate = 6;
     int32 maxUses = 7;
-    int32 eventId = 8;
+    int32 timesUsed = 8;
+    int32 eventId = 9;
 }
 
 // Create Promo

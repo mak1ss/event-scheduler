@@ -18,6 +18,7 @@ namespace Promotions.gRPC.Data.Repositories
         public async Task<Promotion> CreatePromo(Promotion promotion)
         {
             await table.AddAsync(promotion);
+            await ctx.SaveChangesAsync();
             return promotion;
         }
 
@@ -38,6 +39,7 @@ namespace Promotions.gRPC.Data.Repositories
         public async Task<Promotion> UpdatePromo(Promotion promotion)
         {
             await Task.Run(() => table.Update(promotion));
+            await ctx.SaveChangesAsync();
             return promotion;
         }
 
