@@ -3,6 +3,7 @@ syntax = "proto3";
 option csharp_namespace = "Promotions.gRPC.Protos";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 service PromotionProtoService {
 
@@ -10,7 +11,7 @@ service PromotionProtoService {
     rpc UpdatePromo (UpdatePromoRequest) returns (PromoResponse);
     rpc DeletePromo (DeletePromoRequest) returns (DeletePromoResponse);
     rpc UsePromo (UsePromoRequest) returns (PromoResponse);
-    rpc GetPromosByEvent (GetPromosByEventRequest) returns (PromoResponseList);
+    rpc GetAllActivePromos (google.protobuf.Empty) returns (PromoResponseList);
 }
 
 message PromoResponse {
@@ -22,7 +23,6 @@ message PromoResponse {
     google.protobuf.Timestamp endDate = 6;
     int32 maxUses = 7;
     int32 timesUsed = 8;
-    int32 eventId = 9;
 }
 
 // Create Promo
@@ -33,7 +33,6 @@ message CreatePromoRequest {
     google.protobuf.Timestamp startDate = 3;
     google.protobuf.Timestamp endDate = 4;
     int32 maxUses = 5;
-    int32 eventId = 6;
 }
 
 //Update Promo
@@ -46,7 +45,6 @@ message UpdatePromoRequest {
     google.protobuf.Timestamp startDate = 5;
     google.protobuf.Timestamp endDate = 6;
     int32 maxUses = 7;
-    int32 eventId = 8;
 }
 
 //Delete promo
@@ -65,11 +63,7 @@ message UsePromoRequest {
     string code = 1;
 }
 
-// Get promo by EventId
-
-message GetPromosByEventRequest {
-    int32 eventId = 1;
-}
+// Get all
 
 message PromoResponseList {
     repeated PromoResponse items = 1;

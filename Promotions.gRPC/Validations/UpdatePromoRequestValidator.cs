@@ -42,9 +42,6 @@ namespace Promotions.gRPC.Validations
 
             RuleFor(x => x.MaxUses)
                 .GreaterThanOrEqualTo(0).WithMessage("MaxUses must be a non-negative integer.");
-
-            RuleFor(x => x.EventId)
-            .GreaterThan(0).WithMessage("EventId must be a positive integer.");
         }
     }
 }

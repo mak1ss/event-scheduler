@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Promotions.gRPC.Entities;
 using Promotions.gRPC.Interfaces.Repositories;
@@ -74,13 +75,9 @@ namespace Promotions.gRPC.Services
             return mapper.Map<Promotion, PromoResponse>(promo);
         }
 
-        public override async Task<PromoResponseList> GetPromosByEvent(GetPromosByEventRequest request, ServerCallContext context)
+        public override async Task<PromoResponseList> GetAllActivePromos(Empty request, ServerCallContext context)
         {
-            var promos = await repo.GetPromosByEvent(request.EventId);
-            if (promos == null)
-            {
-                throw new RpcException(new Status(StatusCode.NotFound, $"There is no promotions for event with id {request.EventId}"));
-            }
+            var promos = await repo.GetAllPromos();
 
             promos = promos.Where(p => p.EndDate >= DateTime.UtcNow && p.TimesUsed < p.MaxUses);
 

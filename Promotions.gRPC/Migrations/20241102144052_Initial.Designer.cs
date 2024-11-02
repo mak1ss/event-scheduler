@@ -12,8 +12,8 @@ using Promotions.gRPC.Data;
 namespace Promotions.gRPC.Migrations
 {
     [DbContext(typeof(PromotionContext))]
-    [Migration("20241101155240_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241102144052_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,6 @@ namespace Promotions.gRPC.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
 
                     b.Property<int>("MaxUses")
                         .HasColumnType("int");

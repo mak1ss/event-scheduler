@@ -17,7 +17,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistence(Configuration);
-            services.AddApplication();
+            services.AddApplication(Configuration["GrpcSettings:PromotionUrl"]);
 
             services.Configure<ApiBehaviorOptions>(options
                         => options.SuppressModelStateInvalidFilter = true);
@@ -32,7 +32,8 @@ namespace API
 
             services.AddExceptionHandler<BadRequestExceptionHandler>();
             services.AddExceptionHandler<EntityNotFoundExceptionHandler>();
-            services.AddExceptionHandler<GlobalExceptionHandler>();
+            services.AddExceptionHandler<PromoCodeNotValidExceptionHandler>();
+            services.AddExceptionHandler<GlobalExceptionHandler>();          
 
             services.AddProblemDetails();
 

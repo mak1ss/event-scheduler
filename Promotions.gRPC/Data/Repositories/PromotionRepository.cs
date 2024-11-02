@@ -30,9 +30,9 @@ namespace Promotions.gRPC.Data.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Promotion>> GetPromosByEvent(int eventId)
+        public async Task<IEnumerable<Promotion>> GetAllPromos()
         {
-            var entities = await table.Where(p => p.EventId == eventId).ToListAsync();
+            var entities = await table.ToListAsync();
             return entities;
         }
 

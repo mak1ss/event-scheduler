@@ -13,7 +13,7 @@ namespace Application.Purchases.Dto
         public DateTime? PurchasedTime { get; set; }
         public decimal? TotalAmount { get; set; }
         public IEnumerable<PurchaseTicketResponse> PurchasedTickets { get; set; }
-
+        public bool IsPromoCodeUsed { get; set; } = false;
 
         private class Mapper : Profile
         {

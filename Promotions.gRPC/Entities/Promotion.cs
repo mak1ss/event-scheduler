@@ -10,7 +10,6 @@
         public DateTime EndDate { get; set; }
         public int MaxUses { get; set; }
         public int TimesUsed { get; set; }
-        public int EventId { get; set; }
 
     }
 }

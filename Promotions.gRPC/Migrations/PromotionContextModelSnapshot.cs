@@ -44,9 +44,6 @@ namespace Promotions.gRPC.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MaxUses")
                         .HasColumnType("int");
 

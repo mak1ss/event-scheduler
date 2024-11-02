@@ -9,6 +9,6 @@ namespace Promotions.gRPC.Interfaces.Repositories
         Task<Promotion> GetPromoById(int id);
         Task<bool> DeletePromo(int id);
         Task<Promotion> GetPromoByCode(string code);
-        Task<IEnumerable<Promotion>> GetPromosByEvent(int eventId);
+        Task<IEnumerable<Promotion>> GetAllPromos();
     }
 }
