@@ -35,6 +35,9 @@ namespace Persistence.Configurations
             builder.HasMany(p => p.PurchasedTickets)
                 .WithOne(t => t.Purchase)
                 .HasForeignKey(t => t.PurchaseId);
+
+            builder.Property(p => p.IsPromoCodeUsed)
+                .IsRequired();
         }
     }
 }

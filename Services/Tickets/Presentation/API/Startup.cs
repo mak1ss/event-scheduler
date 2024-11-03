@@ -1,6 +1,7 @@
 ﻿using API.ExceptionHandling;
 using API.Filters;
 using Application;
+using Application.Grpc;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 using System.Text.Json.Serialization;
@@ -67,6 +68,7 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<PurchaseService>();
                 endpoints.MapControllers();
             });
         }

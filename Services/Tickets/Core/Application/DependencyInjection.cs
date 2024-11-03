@@ -19,6 +19,8 @@ namespace Application
                 opt.Address = new Uri(grpcUrl);
             });
 
+            services.AddGrpc();
+
             return services;
         }
     }

@@ -11,7 +11,13 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.28.3" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
+    <PackageReference Include="Grpc.Tools" Version="2.67.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
@@ -23,6 +29,10 @@
 		<Protobuf Include="..\..\..\..\Promotions.gRPC\Protos\promotion.proto" GrpcServices="Client">
 			<Link>Protos\promotion.proto</Link>
 		</Protobuf>
+		<Protobuf Include="Protos\purchase.proto" GrpcServices="Server">
+			<Link>Protos\purchase.proto</Link>
+		</Protobuf>
 	</ItemGroup>
+
 	
 </Project>

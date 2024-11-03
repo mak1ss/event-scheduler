@@ -43,8 +43,10 @@ namespace Application.Purchases.Commands.CreatePurchase
                 {
                    promoReply = await UsePromoCode(request);
                 }
-
+               
                 var purchase = mapper.Map<CreatePurchaseCommand, Purchase>(request);
+
+                purchase.IsPromoCodeUsed = promoReply != null;
 
                 purchase.PurchasedTime = DateTime.UtcNow;
 
@@ -74,8 +76,6 @@ namespace Application.Purchases.Commands.CreatePurchase
                 purchaseResponse.PurchasedTickets = purchase.PurchasedTickets
                     .Select((t) => mapper.Map<Ticket, PurchaseTicketResponse>(t))
                     .ToList();
-
-                purchaseResponse.IsPromoCodeUsed = promoReply != null;
 
                 return purchaseResponse;
             }
