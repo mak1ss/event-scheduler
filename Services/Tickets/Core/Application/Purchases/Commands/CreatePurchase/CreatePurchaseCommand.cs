@@ -103,9 +103,8 @@ namespace Application.Purchases.Commands.CreatePurchase
                     {
                         throw new EntityNotFoundException(ex.Status.Detail);
                     }
+                    throw;
                 }
-
-                return null;
             }
         }
 
