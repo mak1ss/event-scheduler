@@ -1,4 +1,6 @@
-﻿namespace Events.WEBAPI
+﻿using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+namespace Events.WEBAPI
 {
     public class Program
     {
@@ -9,7 +11,14 @@
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseKestrel(options =>
+                    {
+                        options.ConfigureEndpointDefaults(listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http1AndHttp2; 
+                        });
+                    }); ;
                 });
     }
 }

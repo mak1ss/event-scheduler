@@ -11,5 +11,6 @@ namespace Domain.Entities
         public DateTime? PurchasedTime { get; set; }
         public decimal? TotalAmount { get; set; }
         public IEnumerable<Ticket> PurchasedTickets { get; set; }
+        public bool IsPromoCodeUsed { get; set; }
     }
 }

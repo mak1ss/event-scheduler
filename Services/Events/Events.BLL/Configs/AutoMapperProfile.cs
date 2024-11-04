@@ -4,6 +4,7 @@ using Events.DAL.Entities;
 using Events.BLL.DTO.Category;
 using Events.BLL.DTO.Events;
 using Events.BLL.DTO.Tag;
+using Events.WEBAPI.Protos;
 
 namespace Events.BLL.Configs
 {
@@ -14,6 +15,10 @@ namespace Events.BLL.Configs
             CreateCategoryMapping();
             CreateTagMapping();
             CreateEventMapping();
+
+            CreateCategoryGrpcMapping();
+            CreateTagGrpcMapping();
+            CreateEventGrpcMapping();
         }
 
         private void CreateCategoryMapping()
@@ -32,6 +37,24 @@ namespace Events.BLL.Configs
         {
             CreateMap<TagRequest, Tag>();
             CreateMap<Tag, TagResponse>();
+        }
+
+
+        // Grpc responses
+
+        private void CreateCategoryGrpcMapping()
+        {
+            CreateMap<CategoryResponse, CategoryGrpcResponse>();
+        }
+
+        private void CreateEventGrpcMapping()
+        {
+            CreateMap<EventResponse, EventGrpcResponse>();
+        }
+
+        private void CreateTagGrpcMapping()
+        {
+            CreateMap<TagResponse, TagGrpcResponse>();
         }
     }
 }

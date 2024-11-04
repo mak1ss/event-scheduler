@@ -1,6 +1,7 @@
 ﻿using API.ExceptionHandling;
 using API.Filters;
 using Application;
+using Application.Grpc;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 using System.Text.Json.Serialization;
@@ -17,7 +18,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistence(Configuration);
-            services.AddApplication();
+            services.AddApplication(Configuration["GrpcSettings:PromotionUrl"]);
 
             services.Configure<ApiBehaviorOptions>(options
                         => options.SuppressModelStateInvalidFilter = true);
@@ -32,7 +33,8 @@ namespace API
 
             services.AddExceptionHandler<BadRequestExceptionHandler>();
             services.AddExceptionHandler<EntityNotFoundExceptionHandler>();
-            services.AddExceptionHandler<GlobalExceptionHandler>();
+            services.AddExceptionHandler<PromoCodeNotValidExceptionHandler>();
+            services.AddExceptionHandler<GlobalExceptionHandler>();          
 
             services.AddProblemDetails();
 
@@ -66,6 +68,7 @@ namespace API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<PurchaseService>();
                 endpoints.MapControllers();
             });
         }

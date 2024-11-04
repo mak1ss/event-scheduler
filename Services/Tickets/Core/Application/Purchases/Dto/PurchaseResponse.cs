@@ -10,10 +10,10 @@ namespace Application.Purchases.Dto
         public int UserId { get; set; }
         public PurchaseStatus Status { get; set; }
         public string PaymentMethod { get; set; }
-        public DateTime? PurchasedTime { get; set; }
+        public DateTime PurchasedTime { get; set; }
         public decimal? TotalAmount { get; set; }
         public IEnumerable<PurchaseTicketResponse> PurchasedTickets { get; set; }
-
+        public bool IsPromoCodeUsed { get; set; } = false;
 
         private class Mapper : Profile
         {

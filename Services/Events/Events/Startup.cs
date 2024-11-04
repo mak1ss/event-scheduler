@@ -1,20 +1,9 @@
-﻿using Events.BLL.Interfaces.Services;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Events.DAL;
-using Events.DAL.Interfaces.Repositories;
-using Events.DAL.Interfaces;
-using FluentValidation.AspNetCore;
-using Events.DAL.Data.Repositories;
-using Events.DAL.Data;
-using Events.BLL.Services;
+﻿using Events.DAL;
 using Events.WEBAPI.ExceptionHandling;
-using Events.BLL.Validations;
-using Events.BLL.DTO.Category;
-using Events.BLL.DTO.Events;
-using Events.BLL.DTO.Tag;
 using Events.WEBAPI.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Events.BLL;
+using Events.BLL.Services.Grpc;
 
 namespace Events.WEBAPI
 {
@@ -27,28 +16,8 @@ namespace Events.WEBAPI
 
         public void ConfigureServices (IServiceCollection services)
         {
-            services.AddDbContext<EventContext>(options =>
-            {
-                string connectionString = Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlServer(connectionString);
-            });
-
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IEventRepository, EventRepository>();
-            services.AddTransient<ITagRepository, TagRepository>();
-
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IEventService, EventService>();
-            services.AddTransient<ITagService, TagService>();
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddFluentValidationAutoValidation();
-            services.AddScoped<IValidator<CategoryRequest>, CategoryRequestValidator>();
-            services.AddScoped<IValidator<EventRequest>, EventRequestValidator>();
-            services.AddScoped<IValidator<TagRequest>, TagRequestValidator>();
+            services.AddBll();
+            services.AddDal(Configuration);
 
             services.Configure<ApiBehaviorOptions>(options
                         => options.SuppressModelStateInvalidFilter = true);
@@ -71,14 +40,14 @@ namespace Events.WEBAPI
             services.AddExceptionHandler<EntityNotFoundExceptionHandler>();
             services.AddExceptionHandler<GlobalExceptionHandler>();
 
-            services.AddStackExchangeRedisCache(options =>
+            services.AddCors(options =>
             {
-                options.Configuration = "localhost";
-                options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+                options.AddPolicy("AllowAll", builder =>
                 {
-                    AbortOnConnectFail = true,
-                    EndPoints = { options.Configuration }
-                };
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
             });
         }
 
@@ -103,8 +72,11 @@ namespace Events.WEBAPI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<GrpcEventService>();
                 endpoints.MapControllers();
             });
+
+            app.UseCors("AllowAll");
         }
     }
 }

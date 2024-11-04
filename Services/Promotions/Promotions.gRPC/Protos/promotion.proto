@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option csharp_namespace = "Promotions.gRPC.Protos";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service PromotionProtoService {
+
+	rpc CreatePromo (CreatePromoRequest) returns (PromoResponse);
+    rpc UpdatePromo (UpdatePromoRequest) returns (PromoResponse);
+    rpc DeletePromo (DeletePromoRequest) returns (DeletePromoResponse);
+    rpc UsePromo (UsePromoRequest) returns (PromoResponse);
+    rpc GetAllActivePromos (google.protobuf.Empty) returns (PromoResponseList);
+}
+
+message PromoResponse {
+    int32 id = 1;
+    string code = 2;
+    string description = 3;
+    double discountPercentage = 4;
+    google.protobuf.Timestamp startDate = 5;
+    google.protobuf.Timestamp endDate = 6;
+    int32 maxUses = 7;
+    int32 timesUsed = 8;
+}
+
+// Create Promo
+
+message CreatePromoRequest {
+    string description = 1;
+    double discountPercentage = 2;
+    google.protobuf.Timestamp startDate = 3;
+    google.protobuf.Timestamp endDate = 4;
+    int32 maxUses = 5;
+}
+
+//Update Promo
+
+message UpdatePromoRequest {
+    int32 id = 1;
+    string code = 2;
+    string description = 3;
+    double discountPercentage = 4;
+    google.protobuf.Timestamp startDate = 5;
+    google.protobuf.Timestamp endDate = 6;
+    int32 maxUses = 7;
+}
+
+//Delete promo
+
+message DeletePromoRequest {
+    int32 id = 1;
+}
+
+message DeletePromoResponse {
+    bool success = 1;
+}
+
+// Use promo
+
+message UsePromoRequest {
+    string code = 1;
+}
+
+// Get all
+
+message PromoResponseList {
+    repeated PromoResponse items = 1;
+}

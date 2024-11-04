@@ -1,0 +1,33 @@
+syntax="proto3";
+
+option csharp_namespace = "Events.WEBAPI.Protos";
+
+import "google/protobuf/timestamp.proto";
+
+service EventProtoService {
+  rpc GetEventById (GetEventRequest) returns (EventGrpcResponse);
+}
+
+message GetEventRequest {
+  int32 id = 1;
+}
+
+message EventGrpcResponse {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  CategoryGrpcResponse category = 5;
+  repeated TagGrpcResponse tags = 6;
+}
+
+message CategoryGrpcResponse {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message TagGrpcResponse {
+  int32 id = 1;
+  string name = 2;
+}

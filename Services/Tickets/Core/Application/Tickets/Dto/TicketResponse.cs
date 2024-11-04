@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Protos;
+using AutoMapper;
 using Domain.Entities;
+using Google.Protobuf.WellKnownTypes;
 
 namespace Application.Tickets.Dto
 {
@@ -17,6 +19,9 @@ namespace Application.Tickets.Dto
             public Mapper()
             {
                 CreateMap<Ticket, TicketResponse>();
+
+                CreateMap<TicketResponse, PurchaseTicketResponse>()
+                    .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => Timestamp.FromDateTime(src.CreatedAt.ToUniversalTime())));
             }
         }
     }

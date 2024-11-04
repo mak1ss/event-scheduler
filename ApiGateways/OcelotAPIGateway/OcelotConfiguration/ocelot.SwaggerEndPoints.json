@@ -1,0 +1,69 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "event",
+      "Config": [
+        {
+          "Name": "Event Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "event",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "feedback",
+      "Config": [
+        {
+          "Name": "Feedback Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "feedback",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "ticket",
+      "Config": [
+        {
+          "Name": "Ticket Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "ticket",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "event-feedback-aggregator",
+      "Config": [
+        {
+          "Name": "Event-FeedbackAggregator Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "event-feedback-aggregator",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "event-purchase-aggregator",
+      "Config": [
+        {
+          "Name": "Event-PurchaseAggregator Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "event-purchase-aggregator",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    }
+  ]
+}

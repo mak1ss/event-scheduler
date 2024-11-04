@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "Application.Protos"; 
+
+import "google/protobuf/timestamp.proto";
+
+service PurchaseProtoService {
+  rpc CreatePurchase(CreatePurchaseRequest) returns (PurchaseResponse);
+
+  rpc GetPurchasesByEvent(GetPurchasesByEventRequest) returns (GetPurchasesByEventResponse);
+}
+
+message CreatePurchaseRequest {
+  int32 user_id = 1;
+  PurchaseStatus status = 2;
+  string payment_method = 3;
+  double total_amount = 4;
+  repeated CreatePurchaseTicket selected_events = 5;
+  optional string promo_code = 6;
+}
+
+enum PurchaseStatus {
+	PENDIND = 0;
+	CANCELED = 1;
+	COMPLETED = 2;
+}
+
+message CreatePurchaseTicket {
+  int32 event_id = 1;
+  int32 tickets_quantity = 2;
+}
+
+message PurchaseResponse {
+  int32 id = 1;
+  int32 user_id = 2;
+  PurchaseStatus status = 3;
+  string payment_method = 4;
+  google.protobuf.Timestamp purchased_time = 5;
+  double total_amount = 6;
+  repeated PurchaseTicketResponse purchased_tickets = 7;
+  bool is_promo_code_used = 8;
+}
+
+message PurchaseTicketResponse {
+  int32 id = 1;
+  int32 event_id = 2;
+  int32 user_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message GetPurchasesByEventRequest {
+  int32 event_id = 1;
+}
+
+message GetPurchasesByEventResponse {
+  repeated PurchaseTicketResponse purchases = 1;
+}
