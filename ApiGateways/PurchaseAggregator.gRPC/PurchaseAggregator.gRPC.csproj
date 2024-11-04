@@ -24,10 +24,10 @@
   </ItemGroup>
 	
    <ItemGroup>
-   	   <Protobuf Include="..\Services\Tickets\Core\Application\Protos\purchase.proto" GrpcServices="Client">
+   	   <Protobuf Include="..\..\Services\Tickets\Core\Application\Protos\purchase.proto" GrpcServices="Client">
    	   	<Link>Protos\purchase.proto</Link>
    	   </Protobuf>
-	   <Protobuf Include="..\Services\Events\Events.BLL\Protos\event.proto" GrpcServices="Client">
+	   <Protobuf Include="..\..\Services\Events\Events.BLL\Protos\event.proto" GrpcServices="Client">
 		   <Link>Protos\event.proto</Link>
 	   </Protobuf>
    </ItemGroup>
