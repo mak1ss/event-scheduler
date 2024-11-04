@@ -1,0 +1,11 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "ServiceName": "event-feedback-aggregator",
+      "SwaggerKey": "event-feedback-aggregator",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/event-feedback-gate/{everything}"
+    }
+  ]
+} 

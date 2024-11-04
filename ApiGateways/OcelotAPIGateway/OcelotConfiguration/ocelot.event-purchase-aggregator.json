@@ -1,0 +1,11 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "ServiceName": "event-purchase-aggregator",
+      "SwaggerKey": "event-purchase-aggregator",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "UpstreamPathTemplate": "/event-purchase-gate/{everything}"
+    }
+  ]
+}

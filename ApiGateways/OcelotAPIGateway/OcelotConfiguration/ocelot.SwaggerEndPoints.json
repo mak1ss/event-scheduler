@@ -40,13 +40,26 @@
       ]
     },
     {
-      "Key": "event-aggregator",
+      "Key": "event-feedback-aggregator",
       "Config": [
         {
-          "Name": "Event-Aggregator Web API",
+          "Name": "Event-FeedbackAggregator Web API",
           "Version": "v1",
           "Service": {
-            "Name": "event-aggregator",
+            "Name": "event-feedback-aggregator",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "event-purchase-aggregator",
+      "Config": [
+        {
+          "Name": "Event-PurchaseAggregator Web API",
+          "Version": "v1",
+          "Service": {
+            "Name": "event-purchase-aggregator",
             "Path": "/swagger/v1/swagger.json"
           }
         }
