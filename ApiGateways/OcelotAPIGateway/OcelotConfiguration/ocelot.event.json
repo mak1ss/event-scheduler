@@ -8,14 +8,16 @@
       "SwaggerKey": "event",
       "FileCacheOptions": {
         "TtlSeconds": 30
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "ServiceName": "event",
       "SwaggerKey": "event",
       "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
-      "UpstreamPathTemplate": "/event-gate/{everything}"
+      "UpstreamPathTemplate": "/event-gate/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ]
 }

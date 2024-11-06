@@ -6,13 +6,14 @@ using Events.BLL.Services;
 using Events.BLL.Validations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Events.BLL
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddBll(this IServiceCollection services)
+        public static IServiceCollection AddBll(this IServiceCollection services, IConfiguration config)
         {
             services.AddGrpc();
 
@@ -29,7 +30,7 @@ namespace Events.BLL
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = "localhost";
+                options.Configuration = config["ConnectionStrings:Redis"];
                 options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
                 {
                     AbortOnConnectFail = true,

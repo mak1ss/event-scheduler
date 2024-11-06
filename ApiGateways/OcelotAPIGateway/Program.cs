@@ -15,8 +15,6 @@ builder.Services.AddSwaggerForOcelot(builder.Configuration);
 #endregion
 
 
-builder.Services.AddRazorPages();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,8 +29,6 @@ app.UseSwaggerForOcelotUI(opt =>
 });
 app.UseOcelot().Wait();
 #endregion
-
-app.UseStaticFiles();
 
 app.UseRouting();
 

@@ -24,11 +24,30 @@ namespace PurchaseAggregator.gRPC
             services.AddGrpcClient<EventProtoService.EventProtoServiceClient>(grpcClient =>
             {
                 grpcClient.Address = new Uri(Configuration["GrpcSettings:EventsUrl"]);
-            });
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                return handler;
+            }); 
+
             services.AddGrpcClient<PurchaseProtoService.PurchaseProtoServiceClient>(grpcClient =>
             {
                 grpcClient.Address = new Uri(Configuration["GrpcSettings:TicketsUrl"]);
-            });
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                return handler;
+            }); 
 
             services.AddSingleton<EventPurchaseService>();
 

@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "events.webapi": "StartDebugging",
+        "feedback.webapi": "StartDebugging",
+        "api": "StartDebugging",
+        "promotions.grpc": "StartDebugging",
+        "eventaggregator": "StartDebugging",
+        "ocelotapigateway": "StartDebugging",
+        "purchaseaggregator.grpc": "StartDebugging"
+      }
+    }
+  }
+}
