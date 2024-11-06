@@ -5,7 +5,8 @@
       "ServiceName": "event-purchase-aggregator",
       "SwaggerKey": "event-purchase-aggregator",
       "UpstreamHttpMethod": [ "GET", "POST" ],
-      "UpstreamPathTemplate": "/event-purchase-gate/{everything}"
+      "UpstreamPathTemplate": "/event-purchase-gate/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ]
 }

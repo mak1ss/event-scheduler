@@ -1,7 +1,65 @@
+version: '3.4'
+
 services:
-    redis:
-        image: redis:7.4.1
-        container_name: redis_cache
-        ports:
-            - "6379:6379"
-        
+  mssql_events:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  mssql_feedbacks:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  mssql_tickets:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+  
+  mssql_promos:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  redis_cache:
+    image: redis:7.4.1
+
+  events.api:
+    image: ${DOCKER_REGISTRY-}eventswebapi
+    build:
+      context: .
+      dockerfile: Services/Events/Events/Dockerfile
+
+  feedbacks.api:
+    image: ${DOCKER_REGISTRY-}feedbackwebapi
+    build:
+      context: .
+      dockerfile: Services/Feedbacks/Feedback/Dockerfile
+
+
+  tickets.api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Services/Tickets/Presentation/API/Dockerfile
+
+
+  promotions.grpc:
+    image: ${DOCKER_REGISTRY-}promotionsgrpc
+    build:
+      context: .
+      dockerfile: Services/Promotions/Promotions.gRPC/Dockerfile
+
+
+  event-feedback-aggr:
+    image: ${DOCKER_REGISTRY-}eventaggregator
+    build:
+      context: .
+      dockerfile: ApiGateways/EventAggregator/Dockerfile
+
+
+  ocelotapigateway:
+    image: ${DOCKER_REGISTRY-}ocelotapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotAPIGateway/Dockerfile
+
+
+  event-purchase-aggr:
+    image: ${DOCKER_REGISTRY-}purchaseaggregatorgrpc
+    build:
+      context: .
+      dockerfile: ApiGateways/PurchaseAggregator.gRPC/Dockerfile
+

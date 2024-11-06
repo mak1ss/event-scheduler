@@ -5,7 +5,8 @@
       "ServiceName": "ticket",
       "UpstreamPathTemplate": "/ticket-gate/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "SwaggerKey": "ticket"
+      "SwaggerKey": "ticket",
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ]
 }

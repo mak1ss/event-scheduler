@@ -19,12 +19,30 @@ namespace EventAggregator
             {
                 c.BaseAddress = new Uri(Configuration["APIUrls:FeedbackAPI"]);
                 c.Timeout = TimeSpan.FromSeconds(30);
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                return handler;
             });
                     
             services.AddHttpClient<IEventService, EventService>(c => {
                 c.BaseAddress = new Uri(Configuration["APIUrls:EventAPI"]);
                 c.Timeout = TimeSpan.FromSeconds(30);
             
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                return handler;
             });
 
             services.AddControllers();

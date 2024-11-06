@@ -11,7 +11,8 @@
         "PeriodTimespan": 1,
         "Limit": 1
       },
-      "SwaggerKey": "feedback"
+      "SwaggerKey": "feedback",
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ]
 }

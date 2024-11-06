@@ -12,7 +12,7 @@ namespace Persistence
 
             IConfiguration config = new ConfigurationBuilder()
                 
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../API"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../../Presentation/API"))
                 .AddJsonFile("appsettings.json")
                 .Build();
             

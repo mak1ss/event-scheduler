@@ -5,7 +5,8 @@
       "ServiceName": "event-feedback-aggregator",
       "SwaggerKey": "event-feedback-aggregator",
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/event-feedback-gate/{everything}"
+      "UpstreamPathTemplate": "/event-feedback-gate/{everything}",
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ]
 } 

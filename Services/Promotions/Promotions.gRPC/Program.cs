@@ -1,10 +1,14 @@
-﻿namespace Promotions.gRPC
+﻿using Promotions.gRPC.Data;
+using Promotions.gRPC.Extensions;
+
+namespace Promotions.gRPC
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build()
+                .MigrateDatabase<PromotionContext>();
             host.Run();
         }
 

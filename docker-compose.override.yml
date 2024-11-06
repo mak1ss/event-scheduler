@@ -1,0 +1,225 @@
+version: '3.4'
+
+services:
+  redis_cache:
+    container_name: redis_cache
+    ports:
+     - "6379:6379"
+    networks:
+     - def
+
+  mssql_events:
+    container_name: mssql_events
+    environment:
+        SA_PASSWORD: "DefPwd1234567890"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+    volumes:
+      - ./docker/mssql_events/data:/var/opt/mssql_events/data
+    networks:
+     - def
+
+  mssql_feedbacks:
+    container_name: mssql_feedbacks
+    environment:
+        SA_PASSWORD: "DefPwd1234567890"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1434:1433"
+    volumes:
+      - ./docker/mssql_events/data:/var/opt/mssql_events/data
+    networks:
+     - def
+
+  mssql-tools:
+    image: mcr.microsoft.com/mssql-tools:latest
+    restart: no
+    command: "/opt/mssql-tools/bin/sqlcmd -S mssql_feedbacks -l 60 -U sa -P 'DefPwd1234567890' -d master -i /tmp/Feedback.SqlDatabase_Create.sql"
+    depends_on:
+      - mssql_feedbacks
+    volumes:
+      - ./Services/Feedbacks/Feedback.SqlDatabase/bin/Debug/Feedback.SqlDatabase_Create.sql:/tmp/Feedback.SqlDatabase_Create.sql
+    networks:
+     - def
+
+  mssql_tickets:
+    container_name: mssql_tickets
+    environment:
+        SA_PASSWORD: "DefPwd1234567890"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1435:1433"
+    volumes:
+      - ./docker/mssql_tickets/data:/var/opt/mssql_tickets/data
+    networks:
+     - def
+
+  mssql_promos:
+    container_name: mssql_promos
+    environment:
+        SA_PASSWORD: "DefPwd1234567890"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1436:1433"
+    volumes:
+      - ./docker/mssql_events/data:/var/opt/mssql_events/data
+    networks:
+     - def
+
+  events.api:
+    container_name: events.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mssql_events;Database=event_db;User id=sa;Password=DefPwd1234567890;Integrated Security=False;TrustServerCertificate=True"  
+      - "ConnectionStrings:Redis=redis_cache"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5101:8080"
+      - "5001:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - mssql_events
+
+  feedbacks.api:
+    container_name: feedbacks.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mssql_feedbacks;Database=Feedback.SqlDatabase;User id=sa;Password=DefPwd1234567890;TrustServerCertificate=True"  
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5102:8080"
+      - "5002:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - mssql_feedbacks
+      - mssql-tools
+
+  tickets.api:
+    container_name: tickets.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mssql_tickets;Database=tickets_db;User id=sa;Password=DefPwd1234567890;TrustServerCertificate=True"  
+      - "GrpcSettings:PromotionUrl=https://promotions.grpc:8081"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5103:8080"
+      - "5003:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - mssql_tickets
+      - promotions.grpc
+
+  promotions.grpc:
+    container_name: promotions.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mssql_promos;Database=promotions_db;User id=sa;Password=DefPwd1234567890;TrustServerCertificate=True"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5106:8080"
+      - "5006:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - mssql_promos
+
+  event-feedback-aggr:
+    container_name: event-feedback-aggr
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "APIUrls:FeedbackAPI=https://feedbacks.api:8081"
+      - "APIUrls:EventAPI=https://events.api:8081"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5104:8080"
+      - "5004:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - events.api
+      - feedbacks.api
+
+  event-purchase-aggr:
+    container_name: event-purchase-aggr
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - "GrpcSettings:EventsUrl=https://events.api:8081"
+      - "GrpcSettings:TicketsUrl=https://tickets.api:8081"
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5107:8080"
+      - "5007:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - events.api
+      - tickets.api
+
+  ocelotapigateway:
+    container_name: ocelotapigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
+      - "Services:event:DownstreamPath=https://events.api:8081"
+      - "Services:feedback:DownstreamPath=https://feedbacks.api:8081"
+      - "Services:ticket:DownstreamPath=https://tickets.api:8081"
+      - "Services:event-feedback-aggregator:DownstreamPath=https://event-feedback-aggr:8081"
+      - "Services:event-purchase-aggregator:DownstreamPath=https://event-purchase-aggr:8081"
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "5105:8080"
+      - "5005:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    networks:
+      - def
+    depends_on:
+      - events.api
+      - feedbacks.api
+      - tickets.api
+      - event-feedback-aggr
+      - event-purchase-aggr
+
+networks:
+  def:
+

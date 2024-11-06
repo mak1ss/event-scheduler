@@ -17,6 +17,16 @@ namespace Application
             services.AddGrpcClient<PromotionProtoService.PromotionProtoServiceClient>(opt =>
             {
                 opt.Address = new Uri(grpcUrl);
+               
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
+                return handler;
             });
 
             services.AddGrpc();

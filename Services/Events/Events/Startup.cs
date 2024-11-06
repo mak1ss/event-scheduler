@@ -16,7 +16,7 @@ namespace Events.WEBAPI
 
         public void ConfigureServices (IServiceCollection services)
         {
-            services.AddBll();
+            services.AddBll(Configuration);
             services.AddDal(Configuration);
 
             services.Configure<ApiBehaviorOptions>(options
