@@ -1,2 +1,0 @@
-CREATE DATABASE event_db;
-GO
