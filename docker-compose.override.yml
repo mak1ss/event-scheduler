@@ -41,7 +41,7 @@ services:
     depends_on:
       - mssql_feedbacks
     volumes:
-      - ./Services/Feedbacks/Feedback.SqlDatabase/bin/Debug/Feedback.SqlDatabase_Create.sql:/tmp/Feedback.SqlDatabase_Create.sql
+      - ./Services/Feedbacks/Feedback.SqlDatabase/init/Feedback.SqlDatabase_Create.sql:/tmp/Feedback.SqlDatabase_Create.sql
     networks:
      - def
 
@@ -75,7 +75,7 @@ services:
     container_name: events.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=mssql_events;Database=event_db;User id=sa;Password=DefPwd1234567890;Integrated Security=False;TrustServerCertificate=True"  
+      - "ConnectionStrings:DefaultConnection=Server=mssql_events;Database=event_db;User id=sa;Password=DefPwd1234567890;TrustServerCertificate=True"  
       - "ConnectionStrings:Redis=redis_cache"
       - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/microservices_NET.pfx 
