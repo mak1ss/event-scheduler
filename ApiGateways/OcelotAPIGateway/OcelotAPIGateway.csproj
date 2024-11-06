@@ -11,11 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="OcelotConfiguration\ocelot.event-purchase-aggregator.json" />
+    <Content Remove="OcelotConfiguration\ocelot.grpc-aggregator.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="OcelotConfiguration\ocelot.event-purchase-aggregator.json" />
+    <None Include="OcelotConfiguration\ocelot.grpc-aggregator.json" />
   </ItemGroup>
 
   <ItemGroup>
